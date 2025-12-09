@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,12 +34,14 @@ public class GameManager : MonoBehaviour
         {
             UIController.Instance.pausePanel.SetActive(true);
             Time.timeScale = 0f;
+            AudioManager.Instance.PlaySound(AudioManager.Instance.Pause);
         }
         else
         {
             UIController.Instance.pausePanel.SetActive(false);
             Time.timeScale = 1f;
             PlayerController.Instance.ExitBoost();
+            AudioManager.Instance.PlaySound(AudioManager.Instance.Unpause);
         }
     }
 
@@ -54,6 +57,12 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        StartCoroutine(ShowGameOver());
+    }
+
+    IEnumerator ShowGameOver()
+    {
+        yield return new WaitForSeconds(3.0f);
         SceneManager.LoadScene("GameOver");
     }
 }
