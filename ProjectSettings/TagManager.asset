@@ -16,8 +16,8 @@ TagManager:
   - Player
   - LevelBoundaries
   - Obstacles
-  - 
-  - 
+  - Critter
+  - Bullet
   - 
   - 
   - 
