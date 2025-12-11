@@ -9,7 +9,7 @@ public class PhaserBullet : MonoBehaviour
 
         if (transform.position.x > 9)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -17,7 +17,7 @@ public class PhaserBullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
