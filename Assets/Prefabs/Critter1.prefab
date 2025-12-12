@@ -174,3 +174,4 @@ MonoBehaviour:
   - {fileID: -2155934039503974715, guid: e27fb6cda5948e44ab982a76282b4d2b, type: 3}
   - {fileID: 7167999689058341495, guid: e27fb6cda5948e44ab982a76282b4d2b, type: 3}
   zappedEffect: {fileID: 1649054338442304038, guid: 509b4cbc13958424fbc2fca3b291f524, type: 3}
+  burnEffect: {fileID: 4013030013853073271, guid: f619d6fab7d2b2a4c9a2b47a97deec13, type: 3}

@@ -13,6 +13,7 @@ public class Critter1 : MonoBehaviour
     private float moveInterval;
 
     [SerializeField] private GameObject zappedEffect;
+    [SerializeField] private GameObject burnEffect;
 
     void Start()
     {
@@ -70,6 +71,12 @@ public class Critter1 : MonoBehaviour
             Instantiate(zappedEffect, transform.position, transform.rotation);
             Destroy(gameObject);
             AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.Squished);
+        }
+        else if(collision.gameObject.CompareTag("Player"))
+        {
+            Instantiate(burnEffect, transform.position, transform.rotation);
+            Destroy(gameObject);
+            AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.Burn);
         }
     }
 }
