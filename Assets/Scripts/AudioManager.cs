@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource Boom2;
     public AudioSource HitRock;
     public AudioSource Shoot;
+    public AudioSource Squished;
 
     private void Awake() {
         if(Instance != null)
