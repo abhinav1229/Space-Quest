@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public float worldSpeed;
+    public int critterCount;
+    [SerializeField] private GameObject boss1;
 
     void Awake()
     {
@@ -25,6 +27,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("Fire3"))
         {
             Pause();
+        }
+
+        if (critterCount > 15)
+        {
+            critterCount = 0;
+            Instantiate(boss1, new Vector2(15f, 0), Quaternion.Euler(0, 0, -90));
         }
     }
 

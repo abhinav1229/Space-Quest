@@ -51,7 +51,7 @@ public class Critter1 : MonoBehaviour
         float moveX = (GameManager.Instance.worldSpeed * PlayerController.Instance.boost) * Time.deltaTime;
         transform.position += new Vector3(-moveX, 0);
 
-        if(transform.position.x < -11)
+        if (transform.position.x < -11)
         {
             Destroy(gameObject);
         }
@@ -71,12 +71,14 @@ public class Critter1 : MonoBehaviour
             Instantiate(zappedEffect, transform.position, transform.rotation);
             Destroy(gameObject);
             AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.Squished);
+            GameManager.Instance.critterCount++;
         }
-        else if(collision.gameObject.CompareTag("Player"))
+        else if (collision.gameObject.CompareTag("Player"))
         {
             Instantiate(burnEffect, transform.position, transform.rotation);
             Destroy(gameObject);
             AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.Burn);
+            GameManager.Instance.critterCount++;
         }
     }
 }

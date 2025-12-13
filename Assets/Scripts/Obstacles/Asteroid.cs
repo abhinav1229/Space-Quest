@@ -11,7 +11,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private GameObject destroyEffect;
     [SerializeField] private int lives;
 
-    [SerializeField] private Sprite[] sprites;    
+    [SerializeField] private Sprite[] sprites;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -32,7 +32,7 @@ public class Asteroid : MonoBehaviour
         float moveX = (GameManager.Instance.worldSpeed * PlayerController.Instance.boost) * Time.deltaTime;
         transform.position += new Vector3(-moveX, 0);
 
-        if(transform.position.x < -11)
+        if (transform.position.x < -11)
         {
             Destroy(gameObject);
         }
@@ -40,20 +40,29 @@ public class Asteroid : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Bullet"))
         {
-            spriteRenderer.material = whiteMaterial;
-            StartCoroutine(ResetMaterial());
+            TakeDamage(1);
+        }
+        else if (collision.gameObject.CompareTag("Boss"))
+        {
+            TakeDamage(10);
+        }
+    }
 
-            AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.HitRock);
+    public void TakeDamage(int damage)
+    {
+        spriteRenderer.material = whiteMaterial;
+        StartCoroutine(ResetMaterial());
 
-            lives -= 1;
-            if(lives <= 0)
-            {
-                Instantiate(destroyEffect, transform.position, transform.rotation);
-                AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.Boom2);
-                Destroy(gameObject);
-            }
+        AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.HitRock);
+
+        lives -= damage;
+        if (lives <= 0)
+        {
+            Instantiate(destroyEffect, transform.position, transform.rotation);
+            AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.Boom2);
+            Destroy(gameObject);
         }
     }
 
