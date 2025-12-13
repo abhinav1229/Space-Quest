@@ -7,10 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-
-    private Material defaultMaterial;
-    [SerializeField] private Material whiteMaterial;
-
+    private FlashWhite flashWhite;
     private Vector2 playerDirection;
     [SerializeField] private float moveSpeed;
 
@@ -43,7 +40,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        defaultMaterial = spriteRenderer.material;
+        flashWhite = GetComponent<FlashWhite>();
 
         energy = maxEnergy;
         UIController.Instance.UpdateEnergySlider(energy, maxEnergy);
@@ -127,7 +124,7 @@ public class PlayerController : MonoBehaviour
         {
             TakeDamage(1);
         }
-        else if(collision.gameObject.CompareTag("Boss"))
+        else if (collision.gameObject.CompareTag("Boss"))
         {
             TakeDamage(5);
         }
@@ -138,8 +135,7 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         UIController.Instance.UpdateHealthSlider(health, maxHealth);
         AudioManager.Instance.PlaySound(AudioManager.Instance.Hit);
-        spriteRenderer.material = whiteMaterial;
-        StartCoroutine(ResetMaterial());
+        flashWhite.Flash();
         if (health <= 0)
         {
             GameManager.Instance.SetWorldSpeed(0f);
@@ -148,11 +144,5 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(AudioManager.Instance.Ice);
         }
-    }
-
-    private IEnumerator ResetMaterial()
-    {
-        yield return new WaitForSeconds(0.2f);
-        spriteRenderer.material = defaultMaterial;
     }
 }

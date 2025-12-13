@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6193886184433736334}
   - component: {fileID: 1799759719129805718}
   - component: {fileID: 7482614459564926987}
+  - component: {fileID: -4957247870329140868}
   m_Layer: 9
   m_Name: Critter1
   m_TagString: Critter
@@ -175,3 +176,15 @@ MonoBehaviour:
   - {fileID: 7167999689058341495, guid: e27fb6cda5948e44ab982a76282b4d2b, type: 3}
   zappedEffect: {fileID: 1649054338442304038, guid: 509b4cbc13958424fbc2fca3b291f524, type: 3}
   burnEffect: {fileID: 4013030013853073271, guid: f619d6fab7d2b2a4c9a2b47a97deec13, type: 3}
+--- !u!114 &-4957247870329140868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711340493733390660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371caa57630f84c4a966e0ca2414ea56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatInSpace

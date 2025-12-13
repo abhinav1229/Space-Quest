@@ -5,9 +5,8 @@ public class Asteroid : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rigidbody2d;
+    private FlashWhite flashWhite;
 
-    private Material defaultMaterial;
-    [SerializeField] private Material whiteMaterial;
     [SerializeField] private GameObject destroyEffect;
     [SerializeField] private int lives;
 
@@ -16,7 +15,7 @@ public class Asteroid : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
-        defaultMaterial = spriteRenderer.material;
+        flashWhite = GetComponent<FlashWhite>();
 
         rigidbody2d = GetComponent<Rigidbody2D>();
         float pushX = Random.Range(-1f, 0);
@@ -25,17 +24,6 @@ public class Asteroid : MonoBehaviour
 
         float randomScale = Random.Range(0.6f, 1.0f);
         transform.localScale = new Vector2(randomScale, randomScale);
-    }
-
-    void Update()
-    {
-        float moveX = GameManager.Instance.worldSpeed * Time.deltaTime;
-        transform.position += new Vector3(-moveX, 0);
-
-        if (transform.position.x < -11)
-        {
-            Destroy(gameObject);
-        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -52,23 +40,14 @@ public class Asteroid : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        spriteRenderer.material = whiteMaterial;
-        StartCoroutine(ResetMaterial());
-
         AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.HitRock);
-
         lives -= damage;
+        flashWhite.Flash();
         if (lives <= 0)
         {
             Instantiate(destroyEffect, transform.position, transform.rotation);
             AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.Boom2);
             Destroy(gameObject);
         }
-    }
-
-    private IEnumerator ResetMaterial()
-    {
-        yield return new WaitForSeconds(0.2f);
-        spriteRenderer.material = defaultMaterial;
     }
 }
