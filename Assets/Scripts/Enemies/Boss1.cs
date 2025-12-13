@@ -13,10 +13,13 @@ public class Boss1 : MonoBehaviour
     private float switchTimer;
 
     private int lives;
+    private int damage;
 
     void Start()
     {
         lives = 100;
+        damage = 20;
+
         animator = transform.GetComponent<Animator>();
         EnterChargeState();
         AudioManager.Instance.PlaySound(AudioManager.Instance.BossSpawn);
@@ -99,17 +102,29 @@ public class Boss1 : MonoBehaviour
         animator.SetBool("charging", true);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Asteroid asteroid = collision.gameObject.GetComponent<Asteroid>();
+            if (asteroid)
+            {
+                asteroid.TakeDamage(damage);
+            }
+        }
+        else if(collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            if (player)
+            {
+                player.TakeDamage(damage);
+            }
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.HitArmor);
         lives -= damage;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            TakeDamage(0);
-        }
     }
 }
