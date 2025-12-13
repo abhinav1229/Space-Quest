@@ -21,7 +21,7 @@ public class ObjectSpawner : MonoBehaviour
 
     void Update()
     {
-        waves[waveNumber].spawnTimer += Time.deltaTime * PlayerController.Instance.boost;
+        waves[waveNumber].spawnTimer += Time.deltaTime * GameManager.Instance.worldSpeed;
 
         if (waves[waveNumber].spawnTimer >= waves[waveNumber].spawnInterval)
         {

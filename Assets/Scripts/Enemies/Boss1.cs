@@ -44,7 +44,7 @@ public class Boss1 : MonoBehaviour
             speedY *= -1;
         }
 
-        float moveX = PlayerController.Instance.boost * Time.deltaTime;
+        float moveX = Time.deltaTime;
         float moveY = speedY * Time.deltaTime;
 
         transform.position += new Vector3(-moveX, moveY);
