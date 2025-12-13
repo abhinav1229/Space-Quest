@@ -19,17 +19,21 @@ public class Boss1 : MonoBehaviour
         lives = 100;
         animator = transform.GetComponent<Animator>();
         EnterChargeState();
+        AudioManager.Instance.PlaySound(AudioManager.Instance.BossSpawn);
     }
 
     void Update()
     {
+        float playerPosition = PlayerController.Instance.transform.position.x;
+
+
         if (switchTimer > 0)
         {
             switchTimer -= Time.deltaTime;
         }
         else
         {
-            if (charging)
+            if (charging && transform.position.x > playerPosition)
             {
                 EnterPatrolState();
             }
@@ -43,8 +47,22 @@ public class Boss1 : MonoBehaviour
         {
             speedY *= -1;
         }
+        else if (transform.position.x < playerPosition)
+        {
+            EnterChargeState();
+        }
 
-        float moveX = Time.deltaTime;
+        bool boost = PlayerController.Instance.boosting;
+        float moveX;
+        if(boost && !charging)
+        {
+            moveX = GameManager.Instance.worldSpeed * Time.deltaTime * -0.05f;
+        }
+        else
+        {
+            moveX = speedX * Time.deltaTime;
+        }
+
         float moveY = speedY * Time.deltaTime;
 
         transform.position += new Vector3(-moveX, moveY);
@@ -68,13 +86,17 @@ public class Boss1 : MonoBehaviour
 
     private void EnterChargeState()
     {
-        speedX = -5f;
+        if (!charging)
+        {
+            AudioManager.Instance.PlaySound(AudioManager.Instance.BossCharge);
+        }
+
+        speedX = -10f;
         speedY = 0;
-        switchInterval = Random.Range(2f, 2.5f);
+        switchInterval = Random.Range(0.6f, 1.3f);
         switchTimer = switchInterval;
         charging = true;
         animator.SetBool("charging", true);
-        AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.BossCharge);
     }
 
     public void TakeDamage(int damage)
