@@ -22,7 +22,7 @@ public class PhaserBullet : MonoBehaviour
             {
                 asteroid.TakeDamage(PhaserWeapon.Instance.damage);
             }
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
         else if (collision.gameObject.CompareTag("Boss"))
         {
@@ -31,7 +31,11 @@ public class PhaserBullet : MonoBehaviour
             {
                 boss1.TakeDamage(PhaserWeapon.Instance.damage);
             }
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("Critter"))
+        {
+            gameObject.SetActive(false);
         }
     }
 }
