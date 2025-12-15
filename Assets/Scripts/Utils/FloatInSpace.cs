@@ -9,7 +9,7 @@ public class FloatInSpace : MonoBehaviour
 
         if(transform.position.x < -11)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

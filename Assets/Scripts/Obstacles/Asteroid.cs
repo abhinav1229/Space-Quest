@@ -6,17 +6,25 @@ public class Asteroid : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rigidbody2d;
     private FlashWhite flashWhite;
+    private ObjectPooler destroyEffectPool;
 
-    [SerializeField] private GameObject destroyEffect;
     private int lives;
+    private int maxLives;
     private int damage;
 
     [SerializeField] private Sprite[] sprites;
+
+
+    private void OnEnable() {
+        lives = maxLives;
+    }
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
         flashWhite = GetComponent<FlashWhite>();
+        destroyEffectPool = GameObject.Find("Boom2Pool").GetComponent<ObjectPooler>();
 
         rigidbody2d = GetComponent<Rigidbody2D>();
         float pushX = Random.Range(-1f, 0);
@@ -26,7 +34,8 @@ public class Asteroid : MonoBehaviour
         float randomScale = Random.Range(0.6f, 1.0f);
         transform.localScale = new Vector2(randomScale, randomScale);
 
-        lives = 5;
+        maxLives = 5;
+        lives = maxLives;
         damage = 1;
     }
 
@@ -49,9 +58,13 @@ public class Asteroid : MonoBehaviour
         flashWhite.Flash();
         if (lives <= 0)
         {
-            Instantiate(destroyEffect, transform.position, transform.rotation);
+            GameObject destroyEffect = destroyEffectPool.GetPooledObject();
+            destroyEffect.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            destroyEffect.SetActive(true);
+
             AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.Boom2);
-            Destroy(gameObject);
+            flashWhite.Reset();
+            gameObject.SetActive(false);
         }
     }
 }
