@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "Space-Quest.sln"
+    "dotnet.defaultSolution": "Space-Quest.slnx"
 }
